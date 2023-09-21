@@ -2,8 +2,6 @@ var holes = document.getElementsByClassName("hole");
 var worm = document.getElementsByClassName("worm-container")
 var win = document.getElementsByClassName("win")
 var bg = document.getElementsByClassName("bg")
-var arr = ['hungry', 'fed', 'sad', 'leaving'];
-var moleTimeouts = [];
 var timeoutId;
 var inertval_id;
 var style = parseInt(worm[0].style.width);
@@ -27,7 +25,6 @@ function startMoleTimer(mole) {
                 mole.src = 'mole-game/leaving.png';
                 setTimeout(function () {
                     if(mole.parentNode){
-
                         mole.parentNode.removeChild(mole);
                     }
                 }, 500);
@@ -37,12 +34,9 @@ function startMoleTimer(mole) {
             }, 500);
         }
     }, 1000);
-
-    moleTimeouts.push(timeoutId);
 }
 
 function moleClicked(mole) {
-    clearTimeout(moleTimeouts[mole.getAttribute('data-index') - 1]);
     var moleType = mole.getAttribute('data-type');
     if (moleType === 'hungry') {
         mole.setAttribute('data-type', 'fed');
@@ -52,8 +46,8 @@ function moleClicked(mole) {
         if(style === 100){
             win[0].style.display = "block";
             bg[0].style.display = "none";
-            // clearInterval(inertval_id);
-            // clearTimeout(timeoutId)
+            clearInterval(inertval_id);
+            clearTimeout(timeoutId);
             console.log("khedama");
         }
         setTimeout(function () {
@@ -67,6 +61,7 @@ function moleClicked(mole) {
 }
 
 function createRandomMole() {
+    console.log("fhgfgcg");
     var moleIndex = rand(1, holes.length);
     var moleType = 'hungry';
 
@@ -93,6 +88,4 @@ function startGame() {
     }
 }
 
-
-// Start the game
 startGame();
