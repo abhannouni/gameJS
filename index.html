@@ -10,36 +10,36 @@
             box-sizing: border-box;
         }
         li {
-  display: flex;
-  flex-direction: column;
-  font-size: 1.5em;
-  list-style-type: none;
-  padding: 1em;
-  text-transform: uppercase;
-}
+            display: flex;
+            flex-direction: column;
+            font-size: 1.5em;
+            list-style-type: none;
+            padding: 1em;
+            text-transform: uppercase;
+        }
 
-li span {
-  display: block;
-  font-size: 4.5rem;
-}
+        li span {
+        display: block;
+        font-size: 4.5rem;
+        }
 
 
-    #countdown ul {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        #countdown ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    #countdown li {
-        font-size: 24px;
-        margin: 0 5px;
-    }
+        #countdown li {
+            font-size: 24px;
+            margin: 0 5px;
+        }
 
-    #countdown #minutes,
-    #countdown #seconds {
-        font-weight: bold;
-    }
+        #countdown #minutes,
+        #countdown #seconds {
+            font-weight: bold;
+        }
 
         body {
             /* background-color: #c0c86d; */
@@ -123,6 +123,12 @@ li span {
             display: none;
         }
 
+        .win-btn{
+            display: none;
+            position: fixed;
+            margin: auto;
+
+        }
         .hide {
             display: none !important;
         }
@@ -132,9 +138,10 @@ li span {
         }
         button{
             margin:50px;
-            background: none;
-            color: #ea8f5b;
-            border:2px solid;
+            width: 500px;
+            background-color: #311616;
+            color: #A38538;
+            border-radius: 30px;
             padding: 1em 2em;
             font-size: 3em;
             transition: color 0.25s,
@@ -155,7 +162,7 @@ li span {
 
 <body>
     <section class="bg">
-        <button onclick="start(event)">play</button>
+        <button onclick="start(event)">Start</button>
         <div class="worm-box">
             <div style="width: 0%" id="worm_id" class="worm-container">
                 <img class="worm" src="mole-game/worm.png" alt="worm meter">
@@ -206,6 +213,7 @@ li span {
         </div>
     </section>
     <img class="win" src="mole-game/win.png" alt="mole">
+    <button onclick="window.location.reload()" class="win-btn">Retry</button>
     <script src="scripts.js"></script>
 </body>
 
