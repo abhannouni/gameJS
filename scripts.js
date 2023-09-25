@@ -3,6 +3,7 @@ const holes = document.querySelectorAll(".hole");
 const worm = document.querySelector(".worm-container");
 const wormBox = document.querySelector(".worm-box");
 const win = document.querySelector(".win");
+const winBtn = document.querySelector(".win-btn");
 const bg = document.querySelector(".bg");
 const seconds = document.getElementById("seconds");
 const minutes = document.getElementById("minutes");
@@ -50,6 +51,7 @@ function moleClicked(mole) {
         worm.style.width = `${style}%`;
         if (style === 70) {
             win.style.display = "block";
+            winBtn.style.display = "block"
             bg.style.display = "none";
             clearInterval(intervalId);
             clearTimeout(timeoutId);
