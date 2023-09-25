@@ -1,88 +1,83 @@
-const allHoles = document.querySelectorAll(".hole-container")
-const holes = document.querySelectorAll(".hole");
+const hole = document.querySelectorAll(".hole");
 const worm = document.querySelector(".worm-container");
-const wormBox = document.querySelector(".worm-box");
-const win = document.querySelector(".win");
-const winBtn = document.querySelector(".win-btn");
-const bg = document.querySelector(".bg");
 const seconds = document.getElementById("seconds");
 const minutes = document.getElementById("minutes");
-
-let timeoutId;
-let intervalId;
+const time = 2500;
 let style = parseInt(worm.style.width);
-const time = 4000;
+let intervalId;
+let i = 0;
+let j = 0;
 
 function baby(num, type) {
-    return `<img data-index="${num}" data-type="${type}" src="mole-game/${type}.png" alt="mole" class="mole" onclick="moleClicked(this);">`;
+    return `<img data-index="${num}" data-type="${type}" src="mole-game/${type}.png" alt="mole" class="mole">`;
 }
 
-const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-function startMoleTimer(mole) {
-    timeoutId = setTimeout(() => {
-        const moleType = mole.getAttribute('data-type');
-        const moleIndex = mole.getAttribute('data-index');
-        if (moleType === 'hungry') {
-            mole.setAttribute('data-type', 'sad');
-            mole.src = 'mole-game/sad.png';
-            setTimeout(() => {
-                mole.setAttribute('data-type', 'leaving');
-                mole.src = 'mole-game/leaving.png';
-                setTimeout(() => {
-                    if(mole.parentNode){
-                        mole.parentNode.removeChild(mole);
-                    }else{
-                        holes[moleIndex-1].removeChild(holes[moleIndex-1].firstChild); 
-                    }
-                }, time);
-            }, time);
-        }
-    }, time);
+function getRandomHole() {
+    const index = Math.floor(Math.random() * hole.length);
+    if (!hole[index].querySelector(".mole")) {
+        return index;
+    }
 }
 
-
-function moleClicked(mole) {
-    const moleType = mole.getAttribute('data-type');
-    if (moleType === 'hungry') {
-        mole.setAttribute('data-type', 'fed');
-        mole.src = 'mole-game/fed.png';
-        style += 5;
-        worm.style.width = `${style}%`;
-        if (style === 70) {
-            win.style.display = "block";
-            winBtn.style.display = "block"
-            bg.style.display = "none";
-            clearInterval(intervalId);
-            clearTimeout(timeoutId);
+function setMole() {
+    const i = getRandomHole();
+    if (i !== undefined) {
+        const moleElement = hole[i].querySelector(".mole");
+        if (moleElement) {
+            return;
         }
+        const moleData = { clicked: false };
+        hole[i].innerHTML = baby(i, "hungry");
+
+        const clickHandler = () => {
+            const { clicked } = moleData;
+            if (!clicked) {
+                if (hole[i].querySelector(".mole[data-type='hungry']")) {
+                    moleData.clicked = true;
+                    fed(i);
+                    hole[i].removeEventListener("click", clickHandler);
+                }
+            }
+        };
+
+        hole[i].addEventListener("click", clickHandler);
+
         setTimeout(() => {
-            mole.setAttribute('data-type', 'leaving');
-            mole.src = 'mole-game/leaving.png';
-            setTimeout(() => {
-                mole.parentNode.removeChild(mole);
-            }, time);
+            if (!moleData.clicked) {
+                if (hole[i].querySelector(".mole[data-type='hungry']")) {
+                    sad(i);
+                }
+            }
         }, time);
     }
 }
 
-function createRandomMole() {
-    const moleIndex = rand(1, holes.length);
-    let moleType = 'hungry';
-
-    const existingMole = holes[moleIndex - 1].querySelector('.mole');
-    if (existingMole) {
-        moleType = existingMole.getAttribute('data-type');
+function fed(i) {
+    hole[i].innerHTML = baby(i, "fed");
+    style += 5;
+    worm.style.width = `${style}%`;
+    if (style === 70) {
+        document.getElementById("win").style.display = "block";
+        document.getElementById("playing").style.display = "none";
+        clearInterval(intervalId);
+        return;
     }
-
-    if (moleType === 'hungry' || moleType === 'sad') {
-        holes[moleIndex - 1].innerHTML = baby(moleIndex, moleType);
-        startMoleTimer(holes[moleIndex - 1].querySelector('.mole'));
-    }
+    setTimeout(() => leaving(i), time);
 }
 
-let i = 0;
-let j = 0;
+function sad(i) {
+    hole[i].innerHTML = baby(i, "sad");
+    setTimeout(() => leaving(i), time);
+}
+
+function leaving(i) {
+    hole[i].innerHTML = baby(i, "leaving");
+    setTimeout(() => rmv(i), time);
+}
+
+function rmv(i) {
+    hole[i].innerHTML = '';
+}
 
 function timer() {
     setTimeout(() => {
@@ -97,22 +92,17 @@ function timer() {
             i++;
         }
         seconds.innerHTML = i;
+        requestAnimationFrame(timer);
     }, 1000);
 }
 
 function startGame() {
+    document.getElementById("start").style.display = "none";
+    document.getElementById("playing").style.display = "block";
     intervalId = setInterval(() => {
-        createRandomMole();
-        timer();
-    }, 1000);
+        setMole();
+    }, time);
+    timer();
 }
 
-function start(ev) {
-    ev.target.style.display = "none";
-    wormBox.style.display = "flex";
-    allHoles.forEach(box => {
-        box.style.display = 'flex';
-      });
-      startGame();
-}
-
+document.querySelector(".start-button").addEventListener("click", startGame);

@@ -1,0 +1,139 @@
+*{
+    cursor: url("mole-game/cursor.png"), auto;
+}
+body {
+    background-image: url(mole-game/2204_w030_n002_359b_p1_359.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+.bg{
+    background-image: url(mole-game/vecteezy_beautiful-wood-background-with-text-space_.jpg);
+    margin: 20px, 10px,20px ,10px ;
+    max-width: 1200px;
+    max-height: 100vh;
+}
+button{
+    margin:50px;
+    width: 500px;
+    background-color: #311616;
+    color: #A38538;
+    border-radius: 30px;
+    padding: 1em 2em;
+    font-size: 3em;
+    transition: color 0.25s,
+}
+#start{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#start h4{
+    font-size: 4em;
+}
+
+.hole-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.hole {
+    background: black;
+    border-radius: 50%;
+    overflow: visible;
+    width: 175px;
+    height: 175px;
+    margin: 30px;
+}
+.mole {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.mole:hover{
+    cursor: url("mole-game/cursor-worm.png"), auto;
+}
+
+.worm-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.worm-container {
+    width: 1000px;
+    overflow: hidden;
+}
+
+.worm {
+    max-width: 100%;
+    height: auto;
+}
+
+li {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5em;
+    list-style-type: none;
+    padding: 1em;
+    text-transform: uppercase;
+}
+
+li span {
+    display: block;
+    font-size: 4.5rem;
+}
+
+#countdown ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#countdown li {
+    font-size: 24px;
+    margin: 0 5px;
+}
+
+#countdown #minutes,
+#countdown #seconds {
+    font-weight: bold;
+}
+#playing{
+    display: none;
+    position: relative;
+}
+#win {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#win img {
+    max-width: 100vw;
+    max-height: 100vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.win-btn{
+    position: relative;
+    margin: auto;
+
+}

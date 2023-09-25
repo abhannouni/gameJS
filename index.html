@@ -1,221 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        li {
-            display: flex;
-            flex-direction: column;
-            font-size: 1.5em;
-            list-style-type: none;
-            padding: 1em;
-            text-transform: uppercase;
-        }
-
-        li span {
-        display: block;
-        font-size: 4.5rem;
-        }
-
-
-        #countdown ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #countdown li {
-            font-size: 24px;
-            margin: 0 5px;
-        }
-
-        #countdown #minutes,
-        #countdown #seconds {
-            font-weight: bold;
-        }
-
-        body {
-            /* background-color: #c0c86d; */
-            background-image: url(mole-game/2204_w030_n002_359b_p1_359.jpg);
-            background-repeat: no-repeat;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 0;
-            margin: 0;
-            height: 100vh;
-            width: 100vw;
-            cursor: url("mole-game/cursor.png"), auto;
-        }
-
-        .bg {
-            background-image: url(mole-game/vecteezy_beautiful-wood-background-with-text-space_.jpg);
-            background-repeat: no-repeat;
-            /* position: fixed; */
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            height: 75vh;
-            width: 85vw;
-        }
-
-        .hole {
-            background: black;
-            border-radius: 50%;
-            overflow: visible;
-            width: 200px;
-            height: 200px;
-        }
-
-        .hole-container {
-            width: 25%;
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .mole {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .mole:hover{
-            cursor: url("mole-game/cursor-worm.png"), auto;
-        }
-
-
-        .gone {
-            display: none;
-        }
-
-        .worm {
-            width: 50vi;
-            gap: 10px;
-        }
-
-        .worm-container {
-            margin: 10px;
-            overflow: hidden;
-            transition: width 0.5s ease-in-out;
-        }
-
-        .worm-box {
-            display: none;
-            flex-direction: row;
-            justify-content: space-between;
-            width: 1660px;
-        }
-
-        .win {
-            max-width: 100vw;
-            max-height: 100vh;
-            display: none;
-        }
-
-        .win-btn{
-            display: none;
-            position: fixed;
-            margin: auto;
-
-        }
-        .hide {
-            display: none !important;
-        }
-
-        .show {
-            display: block;
-        }
-        button{
-            margin:50px;
-            width: 500px;
-            background-color: #311616;
-            color: #A38538;
-            border-radius: 30px;
-            padding: 1em 2em;
-            font-size: 3em;
-            transition: color 0.25s,
-            border-color:0.25s,
-            box-shadow: 0.25s;
-            transform: 0.25s;
-        }
-        button:hover{
-            border-color: #ec8549;
-            color: white;
-            box-shadow:0 0,5em 0.5em -0.4em #ea8f5b;
-            transform: translate Y(-0.25em);
-            cursor: url("mole-game/cursor-worm.png"), auto;
-        }
-    </style>
-    <title>test!</title>
+    <title>mole</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <section class="bg">
-        <button onclick="start(event)">Start</button>
-        <div class="worm-box">
-            <div style="width: 0%" id="worm_id" class="worm-container">
-                <img class="worm" src="mole-game/worm.png" alt="worm meter">
+    <div class="bg">
+        <div id="start">
+            <h4>strees out</h4>
+            <button class="start-button">start</button>
+        </div>
+        <div id="playing">
+            <div class="worm-box">
+                <div style="width: 65%" id="worm_id" class="worm-container">
+                    <img class="worm" src="mole-game/worm.png" alt="worm meter">
+                </div>
+                <div id="countdown">
+                    <ul>
+                        <li><span id="minutes">0</span></li>
+                        <li>:</li>
+                        <li><span id="seconds">0</li>
+                    </ul>
+                </div>
             </div>
-            <div id="countdown">
-                <ul>
-                  <li><span id="minutes">0</span></li>
-                  <li>:</li>
-                  <li><span id="seconds">0</li>
-                </ul>
-              </div>
-        </div>
-        <div class="hole-container">
-            <div class="hole" id="hole-0">
-            </div>
-        </div>
-        <div class="hole-container">
-            <div class="hole" id="hole-1">
-            </div>
-        </div>
-        <div class="hole-container">
-            <div class="hole" id="hole-2">
-            </div>
-        </div>
-        <div class="hole-container">
-            <div class="hole" id="hole-3">
-            </div>
-        </div>
-        <div class="hole-container">
-            <div class="hole" id="hole-4">
-            </div>
-        </div>
-        <div class="hole-container">
-            <div class="hole" id="hole-5"></div>
-        </div>
-        <div class="hole-container">
-            <div class="hole" id="hole-6"></div>
-        </div>
-        <div class="hole-container">
-            <div class="hole" id="hole-7"></div>
-        </div>
-        <div class="hole-container">
-            <div class="hole" id="hole-8"></div>
-        </div>
-        <div class="hole-container">
-            <div class="hole" id="hole-9">
+            <div class="hole-container">
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
             </div>
         </div>
-    </section>
-    <img class="win" src="mole-game/win.png" alt="mole">
-    <button onclick="window.location.reload()" class="win-btn">Retry</button>
+        <div id="win">
+            <img class="win-png" src="mole-game/win.png" alt="mole">
+            <button onclick="window.location.reload()" class="win-btn">Retry</button>
+        </div>
+    </div>
     <script src="scripts.js"></script>
 </body>
-
-
 </html>
